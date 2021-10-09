@@ -4,7 +4,7 @@ class OrderedArray : public BaseArray<T>
 {
 public:
 	bool isDuplicationAllow;
-	OrderedArray(int size, int growBy = 2, bool allowDup=true) 
+	OrderedArray(int size, int growBy = 1, bool allowDup=true) 
 		//BaseArray<T>::m_array(NULL)//, BaseArray<T>::m_maxSize(0)
 		//, BaseArray<T>::m_growSize(0), BaseArray<T>::m_numElements(0)
 	{

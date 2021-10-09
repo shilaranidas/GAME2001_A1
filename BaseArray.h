@@ -96,7 +96,7 @@ public:
 	void SetGrowSize(int val)
 	{
 		assert(val >= 0);
-		m_growSize = val;
+		m_growSize = pow(2,val);
 	}
 	void IncreamentSize()
 	{
@@ -128,8 +128,7 @@ public:
 		temp = nullptr;
 
 		m_maxSize += m_growSize;
-		//expand by 2,4,8,16 
-		m_growSize *= 2;
+		
 		return true;
 	}
 	

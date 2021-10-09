@@ -62,18 +62,42 @@ int main()
 	cout << array.search(23);
 
 	cout << endl << endl;
-
+	UnorderedArray<int> uarray2(3,3);//expand by 8
 	//now tested for grow size
-	cout << "unordered list size:" << uarray.GetSize()<<endl;
-	uarray.push(12);
-	cout << "unordered list size:" << uarray.GetSize() << endl;
-	uarray.push(22);
-	cout << "unordered list size:" << uarray.GetSize() << endl;
+	cout << "unordered list size before           : " << uarray2.GetSize()<<"; max size:"<< uarray2.GetMaxSize()<<endl;//initial max size 3
+	uarray2.push(12);
+	uarray2.push(22);
+	uarray2.push(11);
+	
+	cout << "unordered list size after push 3 data:" << uarray2.GetSize() << "; max size:" << uarray2.GetMaxSize() << endl;// max size 3
+	uarray2.push(21);
+	uarray2.push(32);
+	uarray2.push(42);
+	uarray2.push(45);
+	uarray2.push(24);
+	cout << "unordered list size after push 5 data:" << uarray2.GetSize() << "; max size:" << uarray2.GetMaxSize() << endl;// max size 3+8
+	uarray2.push(26);
+	uarray2.push(42);
+	uarray2.push(45);
+	uarray2.push(45);
+	cout << "unordered list size after push 4 data:" << uarray2.GetSize() << "; max size:" << uarray2.GetMaxSize() << endl;// max size 3+8+8
+	cout << "unordered array contents after expand: ";
+
+	for (int i = 0; i < uarray2.GetSize(); i++)
+	{
+		cout << uarray2[i] << " ";
+	}
+
+	cout << endl;
+
+
+
 	//check for Adding the ability for the ordered array to prevent duplicate data
 	OrderedArray<int> array2(3,2,false);
 	array2.push(12);
 	array2.push(6);
 	array2.push(9);
+
 	cout << "Ordered array contents: ";
 
 	for (int i = 0; i < array2.GetSize(); i++)
@@ -91,7 +115,7 @@ int main()
 	}
 
 	cout << endl;
-
+	
 	return 0;
 }
 
