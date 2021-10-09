@@ -3,26 +3,43 @@ template<class T>
 class OrderedArray : public BaseArray<T>
 {
 public:
-	OrderedArray<T>(int size, int growBy = 1)
+	OrderedArray(int size, int growBy = 1) 
+		//BaseArray<T>::m_array(NULL)//, BaseArray<T>::m_maxSize(0)
+		//, BaseArray<T>::m_growSize(0), BaseArray<T>::m_numElements(0)
 	{
-		BaseArray<T>(size, growBy);
+		BaseArray<T>::SetSize(0);
+		BaseArray<T>::SetMaxSize(0);
+		BaseArray<T>::SetGrowSize(0);
+		if (size)	// Is this a legal size for an array?
+		{
+			//BaseArray<T>::m_maxSize = size;
+			BaseArray<T>::SetMaxSize(size);
+			BaseArray<T>::m_array = new T[BaseArray<T>::GetMaxSize()];		// Dynamically allocating an array to m_maxSize
+			memset(BaseArray<T>::m_array, 0, sizeof(T) * BaseArray<T>::GetMaxSize());	// Explicitly set 0 to all elements in the array
+			BaseArray<T>::SetGrowSize(((growBy > 0) ? growBy : 0));
+			
+		}
 	}
 	~OrderedArray<T>() {
-		~BaseArray<T>();
+		if (BaseArray<T>::m_array != nullptr)
+		{
+			delete[] BaseArray<T>::m_array;
+			BaseArray<T>::m_array = nullptr;
+		}
 	}
 	// Insertion -- Big-O = O(N)
 	void push(T val)
 	{
 		assert(BaseArray<T>::m_array != nullptr);
 
-		if (BaseArray<T>::m_numElements >= BaseArray<T>::m_maxSize)
+		if (BaseArray<T>::GetSize() >= BaseArray<T>::GetMaxSize())
 		{
 			BaseArray<T>::Expand();
 		}
 
 		int i, k;	// i - Index to be inserted. k - Used for shifting purposes
 		// Step 1: Find the index to insert val
-		for (i = 0; i < BaseArray<T>::m_numElements; i++)
+		for (i = 0; i < BaseArray<T>::GetSize(); i++)
 		{
 			if (BaseArray<T>::m_array[i] > val)
 			{
@@ -31,7 +48,7 @@ public:
 		}
 
 		// Step 2: Shift everything to the right of the index(i) forward by one. Work backwards
-		for (k = BaseArray<T>::m_numElements; k > i; k--)
+		for (k = BaseArray<T>::GetSize(); k > i; k--)
 		{
 			BaseArray<T>::m_array[k] = BaseArray<T>::m_array[k - 1];
 		}
@@ -39,7 +56,7 @@ public:
 		// Step 3: Insert val into the array at index
 		BaseArray<T>::m_array[i] = val;
 
-		BaseArray<T>::m_numElements++;
+		BaseArray<T>::IncreamentSize();
 
 		// return i;
 	}
@@ -49,15 +66,15 @@ public:
 	{
 		// Call to binary search recursive function
 		// Binary Search: searchKey, initial lowerBound, initial upperBound
-		return binarySearch(searchKey, 0, BaseArray<T>::m_numElements - 1);
+		return binarySearch(searchKey, 0, BaseArray<T>::GetSize() - 1);
 	}
-private:
+
 	// Recursive Binary Search
 	int binarySearch(T searchKey, int lowerBound, int upperBound)
 	{
 		assert(BaseArray<T>::m_array != nullptr);
 		assert(lowerBound >= 0);
-		assert(upperBound < BaseArray<T>::m_numElements);
+		assert(upperBound < BaseArray<T>::GetSize());
 
 		// Bitwise divide by 2
 		int current = (lowerBound + upperBound) >> 1;

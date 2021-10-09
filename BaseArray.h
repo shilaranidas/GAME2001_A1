@@ -5,18 +5,19 @@ template<class T>
 class BaseArray
 {
 public:
+	T* m_array;			// Pointer to the beginning of the array
 	// Constructor
-	BaseArray(int size, int growBy = 1) :
+	BaseArray() :
 		m_array(NULL), m_maxSize(0), m_growSize(0), m_numElements(0)
 	{
-		if (size)	// Is this a legal size for an array?
-		{
-			m_maxSize = size;
-			m_array = new T[m_maxSize];		// Dynamically allocating an array to m_maxSize
-			memset(m_array, 0, sizeof(T) * m_maxSize);	// Explicitly set 0 to all elements in the array
+		//if (size)	// Is this a legal size for an array?
+		//{
+		//	m_maxSize = size;
+		//	m_array = new T[m_maxSize];		// Dynamically allocating an array to m_maxSize
+		//	memset(m_array, 0, sizeof(T) * m_maxSize);	// Explicitly set 0 to all elements in the array
 
-			m_growSize = ((growBy > 0) ? growBy : 0);
-		}
+		//	m_growSize = ((growBy > 0) ? growBy : 0);
+		//}
 	}
 	// Destructor
 	~BaseArray()
@@ -77,21 +78,32 @@ public:
 	{
 		return m_numElements;
 	}
+	void SetSize(int n)
+	{
+		m_numElements = n;
+	}
 	int GetMaxSize()
 	{
 		return m_maxSize;
+	}
+	void SetMaxSize(int m) {
+		m_maxSize = m;
 	}
 	int GetGrowSize()
 	{
 		return m_growSize;
 	}
-	int SetGrowSize(int val)
+	void SetGrowSize(int val)
 	{
 		assert(val >= 0);
 		m_growSize = val;
 	}
-private:
-	// Private functions
+	void IncreamentSize()
+	{
+		m_numElements++;
+	}
+	
+
 	// Expansion
 	bool Expand()
 	{
@@ -119,9 +131,10 @@ private:
 
 		return true;
 	}
+	
+	
 private:
-	// Private Variables
-	T* m_array;			// Pointer to the beginning of the array
+	
 
 	int m_maxSize;		// Maximum size of the array
 	int m_growSize;		// Amount the array can grow through expansion

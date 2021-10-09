@@ -1,14 +1,31 @@
+#include <cassert>
 #include "BaseArray.h"
 template<class T>
 class UnorderedArray: public BaseArray<T>
 {
 public:
-	UnorderedArray<T>(int size, int growBy = 1)
+	UnorderedArray(int size, int growBy = 1) 
+		
 	{
-		BaseArray<T>(size, growBy);
+		UnorderedArray::SetSize(0);
+		UnorderedArray::SetMaxSize(0);
+		UnorderedArray::SetGrowSize(0);
+		if (size)	// Is this a legal size for an array?
+		{
+			//BaseArray<T>::m_maxSize = size;
+			BaseArray<T>::SetMaxSize(size);
+			BaseArray<T>::m_array = new T[BaseArray<T>::GetMaxSize()];		// Dynamically allocating an array to m_maxSize
+			memset(BaseArray<T>::m_array, 0, sizeof(T) * BaseArray<T>::GetMaxSize());	// Explicitly set 0 to all elements in the array
+
+			BaseArray<T>::SetGrowSize(((growBy > 0) ? growBy : 0));
+		}
 	}
 	~UnorderedArray<T>() {
-		~BaseArray<T>();
+		if (BaseArray<T>::m_array != nullptr)
+		{
+			delete[] BaseArray<T>::m_array;
+			BaseArray<T>::m_array = nullptr;
+		}
 	}
 	// Insertion
 	// Fast insertion for UnorderedArray -- Big-O is O(1)
@@ -16,14 +33,14 @@ public:
 	{
 		assert(BaseArray<T>::m_array != nullptr); // Debugging purposes
 
-		if (BaseArray<T>::m_numElements >= BaseArray<T>::m_maxSize)	// Check if the array has to expand to accommodate the new data.
+		if (BaseArray<T>::GetSize() >= BaseArray<T>::GetMaxSize())	// Check if the array has to expand to accommodate the new data.
 		{
 			BaseArray<T>::Expand();
 		}
 
 		// My array has space for a new value. Let's add it!
-		BaseArray<T>::m_array[BaseArray<T>::m_numElements] = val;
-		BaseArray<T>::m_numElements++;
+		BaseArray<T>::m_array[BaseArray<T>::GetSize()] = val;
+		BaseArray<T>::IncreamentSize();
 	}
 	// Searching
 	// Linear Search
@@ -32,7 +49,7 @@ public:
 		assert(BaseArray<T>::m_array != nullptr);
 
 		// Brute-force Search
-		for (int i = 0; i < BaseArray<T>::m_numElements; i++)
+		for (int i = 0; i < BaseArray<T>::GetSize(); i++)
 		{
 			if (BaseArray<T>::m_array[i] == val)
 			{
