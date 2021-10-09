@@ -2,6 +2,8 @@
 //
 
 #include <iostream>
+#include "UnorderedArray.h"
+#include "OrderedArray.h"
 
 int main()
 {

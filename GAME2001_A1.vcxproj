@@ -141,6 +141,11 @@
   <ItemGroup>
     <ClCompile Include="GAME2001_A1.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BaseArray.h" />
+    <ClInclude Include="OrderedArray.h" />
+    <ClInclude Include="UnorderedArray.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
