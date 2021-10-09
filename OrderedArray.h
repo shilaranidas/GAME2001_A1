@@ -3,13 +3,15 @@ template<class T>
 class OrderedArray : public BaseArray<T>
 {
 public:
-	OrderedArray(int size, int growBy = 1) 
+	bool isDuplicationAllow;
+	OrderedArray(int size, int growBy = 2, bool allowDup=true) 
 		//BaseArray<T>::m_array(NULL)//, BaseArray<T>::m_maxSize(0)
 		//, BaseArray<T>::m_growSize(0), BaseArray<T>::m_numElements(0)
 	{
 		BaseArray<T>::SetSize(0);
 		BaseArray<T>::SetMaxSize(0);
 		BaseArray<T>::SetGrowSize(0);
+		isDuplicationAllow = allowDup;
 		if (size)	// Is this a legal size for an array?
 		{
 			//BaseArray<T>::m_maxSize = size;
@@ -41,6 +43,11 @@ public:
 		// Step 1: Find the index to insert val
 		for (i = 0; i < BaseArray<T>::GetSize(); i++)
 		{
+			if (BaseArray<T>::m_array[i] == val && !isDuplicationAllow)
+			{
+				std::cout << "Duplication value is not allowed" << std::endl;
+				return;
+			}
 			if (BaseArray<T>::m_array[i] > val)
 			{
 				break;

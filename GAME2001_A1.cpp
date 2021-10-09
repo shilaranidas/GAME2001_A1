@@ -63,6 +63,35 @@ int main()
 
 	cout << endl << endl;
 
+	//now tested for grow size
+	cout << "unordered list size:" << uarray.GetSize()<<endl;
+	uarray.push(12);
+	cout << "unordered list size:" << uarray.GetSize() << endl;
+	uarray.push(22);
+	cout << "unordered list size:" << uarray.GetSize() << endl;
+	//check for Adding the ability for the ordered array to prevent duplicate data
+	OrderedArray<int> array2(3,2,false);
+	array2.push(12);
+	array2.push(6);
+	array2.push(9);
+	cout << "Ordered array contents: ";
+
+	for (int i = 0; i < array2.GetSize(); i++)
+	{
+		cout << array2[i] << " ";
+	}
+
+	cout << endl;
+	cout << "insert duplicate value" << endl;
+	array2.push(9);
+	cout << "Ordered array contents (no change): ";
+	for (int i = 0; i < array2.GetSize(); i++)
+	{
+		cout << array2[i] << " ";
+	}
+
+	cout << endl;
+
 	return 0;
 }
 

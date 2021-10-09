@@ -128,7 +128,8 @@ public:
 		temp = nullptr;
 
 		m_maxSize += m_growSize;
-
+		//expand by 2,4,8,16 
+		m_growSize *= 2;
 		return true;
 	}
 	

@@ -4,7 +4,7 @@ template<class T>
 class UnorderedArray: public BaseArray<T>
 {
 public:
-	UnorderedArray(int size, int growBy = 1) 
+	UnorderedArray(int size, int growBy = 2) 
 		
 	{
 		UnorderedArray::SetSize(0);
