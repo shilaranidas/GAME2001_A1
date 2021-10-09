@@ -96,6 +96,11 @@ public:
 	void SetGrowSize(int val)
 	{
 		assert(val >= 0);
+		//here grow size for expanding with power of 2. for example, 
+		//if 1 then 2, 
+		    //2 then 4, 
+	      	//3 then 8,
+		    //4 then 16, etc
 		m_growSize = pow(2,val);
 	}
 	void IncreamentSize()
